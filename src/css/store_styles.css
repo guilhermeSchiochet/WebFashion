@@ -1,0 +1,111 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+header {
+  background-color: #fff;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  justify-content: space-between;
+}
+
+nav a {
+  color: #1b1919;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+nav a:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+nav img {
+  width: 230px;
+  height: auto;
+  margin-right: auto;
+}
+
+nav .search-box {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+nav .search-box input[type="text"] {
+  padding: 10px 10px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  margin: 0px 30px;
+}
+
+nav .search-box input[type="text"]:focus {
+  outline: none;
+  border-color: #333;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Adiciona uma area em volta das imagens */
+section {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+section li {
+  margin-right: 20px;
+  text-align: center;
+}
+
+section img {
+  max-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+section h3 {
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+section p {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #333;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
