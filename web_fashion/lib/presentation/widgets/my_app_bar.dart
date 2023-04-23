@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:web_fashion/domain/model/nav_items_model.dart';
@@ -30,12 +31,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Constrói a área superior da AppBar, onde são exibidos ícones e opções de menu.
   Widget _buildUpperArea(BuildContext context) {
     return SafeArea(
-      child: Container(
-        alignment: Alignment.centerLeft,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.grey.shade200,
+      child: Ink(
         height: 50,
-        child: _areaEmCima(),
+        color: Colors.grey.shade200,
+        width: MediaQuery.of(context).size.width,
+        child: _areaEmCima(context),
       ),
     );
   }
@@ -72,14 +72,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   /// Constrói a área de ícones e opções de menu na área superior da AppBar.
-  Widget _areaEmCima() {
+  Widget _areaEmCima(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildContainerStarkzhx,
+          _buildContainerStarkzhx(context),
           _buildContainerUser
         ],
       ),
@@ -87,7 +87,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   /// Cria a area Starkzhx
-  Widget get _buildContainerStarkzhx {
+  Widget _buildContainerStarkzhx(BuildContext context) {
     return Row(
       children: const [
         Icon(FontAwesomeIcons.googleWallet),
@@ -101,25 +101,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontSize: 17
           ),
         ),
-      ],
-    );
-  }
-
-  /// Cria a area com os helps e conta de usuario
-  Widget get _buildContainerUser {
-    return Row(
-      children: const [
-        Text('Ajuda'),
-        SizedBox(
-          height: 9,
-          child: VerticalDivider(),
-        ),
-        Text('Junte-se a nós'),
-        SizedBox(
-          height: 9,
-          child: VerticalDivider(),
-        ),
-        Text('Entrar'),
       ],
     );
   }
@@ -143,11 +124,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildNavItems() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: _navItems.map((item) => _buildNavItem(item)).toList(),
+      children: _navItems.map((item) => _buildNavItem(item, fontSize: 18)).toList(),
     );
   }
 
-  Widget _buildNavItem(NavItemsModel item) {
+  /// Cria um widget de navegação com base no [item] fornecido.
+  ///
+  /// O [item] é um objeto do tipo `ModelItems` contendo informações
+  /// sobre o item de navegação, como o título.
+  Widget _buildNavItem(ModelItems item, {double? fontSize}) {
     return InkWell(
       borderRadius: BorderRadius.circular(7),
       onTap: () {},
@@ -155,8 +140,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Text(
           item.title,
-          style: const TextStyle(
-            fontSize: 18
+          style: TextStyle(
+            fontSize: fontSize
           ),
         ),
       ),
@@ -188,9 +173,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return TextFormFieldBuilder(
       filled: true,
       hintText: 'Buscar',
-      contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
-      hintStyle: const TextStyle(fontSize: 15),
       fillColor: Colors.grey.shade100,
+      hintStyle: const TextStyle(fontSize: 15),
       prefix: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(Icons.search, color: Colors.grey),
@@ -199,6 +183,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         borderRadius: BorderRadius.circular(30),
         borderSide: const BorderSide(color: Colors.grey),
       ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
     );
   }
 
@@ -206,13 +191,49 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget get _buildShoppingIcon => const IconButtonShopping();
 
   /// Realiza mapeamento dos NavItems
-  List<NavItemsModel> get _navItems => [
-    NavItemsModel(title: 'Lançamentos'),
-    NavItemsModel(title: 'Ofertas'),
-    NavItemsModel(title: 'Feminino'),
-    NavItemsModel(title: 'Masculino'),
-    NavItemsModel(title: 'Infantil'),
-    NavItemsModel(title: 'KSDL'),
+  List<ModelItems> get _navItems => [
+    ModelItems(title: 'Lançamentos'),
+    ModelItems(title: 'Ofertas'),
+    ModelItems(title: 'Feminino'),
+    ModelItems(title: 'Masculino'),
+    ModelItems(title: 'Infantil'),
   ];
 
+  /// Cria a área com os itens de ajuda e conta de usuário.
+  ///
+  /// Itera sobre a lista `_helps` e utiliza a função `_buildNavItem`
+  /// para criar os itens de navegação. O último item não inclui um
+  /// `VerticalDivider` após ele.
+  Widget get _buildContainerUser {
+    return Row(
+      children: _infCont.mapIndexed((index, help) => _buildNavItemWithDivider(help, index)).expand((item) => item).toList(),
+    );
+  }
+
+  /// Cria um widget de navegação seguido por um widget VerticalDivider,
+  /// exceto para o último item.
+  ///
+  /// [item] é o objeto do tipo `ModelItems` contendo informações
+  /// sobre o item de navegação, como o título.
+  /// [index] é o índice atual do item na lista.
+  List<Widget> _buildNavItemWithDivider(ModelItems item, int index) {
+    List<Widget> widgets = [_buildNavItem(item)];
+    if (index < _infCont.length - 1) {
+      widgets.add(
+        const SizedBox(
+          height: 9,
+          child: VerticalDivider(),
+        )
+      );
+    }
+    return widgets;
+  }
+
+  List<ModelItems> get _infCont => [
+    ModelItems(title: 'Ajuda'),
+    ModelItems(title: 'Junte-se a nós'),
+    ModelItems(title: 'Entrar'),
+  ];
 }
+
+
