@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:web_fashion/presentation/widgets/custom_card.dart';
 
 class BodyScreen extends StatefulWidget {
   const BodyScreen({super.key});
@@ -9,6 +10,7 @@ class BodyScreen extends StatefulWidget {
 }
 
 class _BodyScreenState extends State<BodyScreen> {
+
   int _currentIndex = 0;
 
   @override
@@ -77,48 +79,39 @@ class _BodyScreenState extends State<BodyScreen> {
     );
   }
 
-
   Widget _buildCreateContainerAnuncios(String path) {
     return Container(
-        key: const ValueKey<int>(1),
-        width: MediaQuery.of(context).size.width * 0.90,
-        height: 500,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.transparent,
+      key: const ValueKey<int>(1),
+      width: MediaQuery.of(context).size.width * 0.90,
+      height: 500,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.transparent,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Image.asset(
+          path,
+          fit: BoxFit.cover,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            path,
-            fit: BoxFit.cover,
-          ),
       ),
     );
   }
 
   Widget buildCards() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(20, (index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(10)
-              ),
-              height: 330,
-              width: 270,
-              child: Column(
-                children: [
-                  
-                ],
-              ),
-            ),
-          );
-        }),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 87.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(20, (index) {
+            return const CustomCard(
+              price: '999,99',
+              title: 'Nike Dunk Low Retro SE Casual',
+              pathImage: 'assets/produtos/white_jacket.png',
+            );
+          }),
+        ),
       ),
     );
   }
