@@ -14,6 +14,7 @@ class TextFormFieldBuilder extends StatelessWidget {
   final String? labelText;
   final TextStyle? hintStyle;
   final TextInputType? keyboardType;
+  final void Function(String?)? onSaved;
   final TextInputAction? textInputAction;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
@@ -32,6 +33,7 @@ class TextFormFieldBuilder extends StatelessWidget {
     this.maxLines,
     this.errorText,
     this.labelText,
+    this.onSaved,
     this.hintText,
     this.validator,
     this.onChanged,
@@ -84,6 +86,7 @@ class TextFormFieldBuilder extends StatelessWidget {
         enabledBorder: border,
         focusedBorder: border,
       ),
+      onSaved: onSaved,
       readOnly: readOnly,
       validator: validator,
       onChanged: onChanged,
