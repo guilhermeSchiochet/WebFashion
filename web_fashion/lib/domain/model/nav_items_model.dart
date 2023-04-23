@@ -1,7 +1,7 @@
-class NavItemsModel {
+class ModelItems {
   final String title;
 
-  NavItemsModel({
+  ModelItems({
     required this.title
   });
 }
