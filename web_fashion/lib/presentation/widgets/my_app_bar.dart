@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:web_fashion/domain/model/nav_items_model.dart';
+import 'package:web_fashion/presentation/screens/login_screen.dart';
 import 'package:web_fashion/presentation/widgets/icon_button_shopping.dart';
 import 'package:web_fashion/presentation/widgets/text_form_field_builder.dart';
 
@@ -50,7 +51,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             _buildImage(),
             const Spacer(),
-            _buildNavItems(),
+            _buildNavItems(context),
             const Spacer(),
             _buildSearchAndIcon(),
           ],
@@ -80,7 +81,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildContainerStarkzhx(context),
-          _buildContainerUser
+          _buildContainerUser(context)
         ],
       ),
     );
@@ -121,10 +122,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   /// Constrói os itens de navegação na área principal da AppBar.
-  Widget _buildNavItems() {
+  Widget _buildNavItems(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: _navItems.map((item) => _buildNavItem(item, fontSize: 18)).toList(),
+      children: _navItems.map((item) => _buildNavItem(item, context, fontSize: 18)).toList(),
     );
   }
 
@@ -132,10 +133,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   ///
   /// O [item] é um objeto do tipo `ModelItems` contendo informações
   /// sobre o item de navegação, como o título.
-  Widget _buildNavItem(ModelItems item, {double? fontSize}) {
+  Widget _buildNavItem(ModelItems item, BuildContext context, {double? fontSize}) {
     return InkWell(
       borderRadius: BorderRadius.circular(7),
-      onTap: () {},
+      onTap: () {
+        switch (item.id) {
+          case 'entrar':
+            Navigator.push(context, PageRouteBuilder(pageBuilder: (a, b ,s) => const LoginScreen()));
+            break;
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Text(
@@ -204,9 +211,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Itera sobre a lista `_helps` e utiliza a função `_buildNavItem`
   /// para criar os itens de navegação. O último item não inclui um
   /// `VerticalDivider` após ele.
-  Widget get _buildContainerUser {
+  Widget _buildContainerUser(BuildContext context) {
     return Row(
-      children: _infCont.mapIndexed((index, help) => _buildNavItemWithDivider(help, index)).expand((item) => item).toList(),
+      children: _infCont.mapIndexed((index, help) => _buildNavItemWithDivider(help, index, context)).expand((item) => item).toList(),
     );
   }
 
@@ -216,8 +223,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// [item] é o objeto do tipo `ModelItems` contendo informações
   /// sobre o item de navegação, como o título.
   /// [index] é o índice atual do item na lista.
-  List<Widget> _buildNavItemWithDivider(ModelItems item, int index) {
-    List<Widget> widgets = [_buildNavItem(item)];
+  List<Widget> _buildNavItemWithDivider(ModelItems item, int index, BuildContext context) {
+    List<Widget> widgets = [_buildNavItem(item, context)];
     if (index < _infCont.length - 1) {
       widgets.add(
         const SizedBox(
@@ -230,9 +237,18 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<ModelItems> get _infCont => [
-    ModelItems(title: 'Ajuda'),
-    ModelItems(title: 'Junte-se a nós'),
-    ModelItems(title: 'Entrar'),
+    ModelItems(
+      title: 'Ajuda',
+      id: 'ajuda'
+    ), 
+    ModelItems(
+      title: 'Junte-se a nós',
+      id: 'junt'
+    ),
+    ModelItems(
+      title: 'Entrar',
+      id: 'entrar'
+    ),
   ];
 }
 
