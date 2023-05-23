@@ -30,7 +30,7 @@ class _BodyScreenState extends State<BodyScreen> {
           const SizedBox(
             height: 30,
           ),
-          _buildContainerDead
+          _buildContainerDead,
         ],
       ),
     );
