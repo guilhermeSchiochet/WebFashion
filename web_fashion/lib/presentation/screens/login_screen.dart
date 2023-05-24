@@ -9,12 +9,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.55,
           width: MediaQuery.of(context).size.width * 0.25,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -53,15 +54,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 20,
                 ),
+                _buildWidgetPrivacidade(),
+                const SizedBox(
+                  height: 20,
+                ),
                 _buttonLogin(),
                 const SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 _containerRegister()
               ],
             )
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildWidgetPrivacidade() {
+    return const Text(
+      'Ao fazer login, você concorda com a Política de privacidade e com os Termos de uso do Starkzhx.com.br.',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 12
       ),
     );
   }
@@ -79,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 
   Widget _buttonLogin() {
     return ElevatedButton(
@@ -130,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const Text(
           'Don\'t have an account?',
           style: TextStyle(
-            color: Colors.grey,
+            color: Color.fromARGB(255, 12, 12, 12),
           ),
         ),
         _registerButton('Register')
@@ -155,7 +169,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   Widget _checkBox() {
     ValueNotifier<bool> valueNotifier = ValueNotifier(false);
 
@@ -166,6 +179,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: ValueListenableBuilder(
             builder: (context, value, child) => Checkbox(
               activeColor: Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4)
+              ),
               value: valueNotifier.value,
               onChanged: (e) {
                 valueNotifier.value = e ?? false;
