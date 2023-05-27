@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:web_fashion/data/repository/regex_repository.dart';
+import 'package:web_fashion/domain/useCases/validate_email_usecase.dart';
+import 'package:web_fashion/presentation/widgets/formField/email_input_field.dart';
 import 'package:web_fashion/presentation/widgets/text_form_field_builder.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,12 +13,21 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
+  late final ValidateEmailUseCase validateEmailUseCase;
+
+  @override
+  void initState() {
+    final regexRepository = RegexRepositoryImpl();
+    validateEmailUseCase = ValidateEmailUseCase(regexRepository);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.55,
+          height: MediaQuery.of(context).size.height * 0.60,
           width: MediaQuery.of(context).size.width * 0.25,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -198,16 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _campos() {
     return Column(
       children: [
-        TextFormFieldBuilder(
-          filled: true,
-          fillColor: Colors.grey.shade200,
-          hintText: 'Endereço de e-mail',
-          hintStyle: const TextStyle(fontSize: 15),
-          contentPadding: const EdgeInsets.only(
-            left: 7.0,
-            top: 15.0,
-            bottom: 15.0,
-          ),
+        EmailInputField(
+          validateEmailUseCase: validateEmailUseCase
         ),
         const SizedBox(
           height: 20,                  

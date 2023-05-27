@@ -13,6 +13,8 @@ class _BodyScreenState extends State<BodyScreen> {
 
   int _currentIndex = 0;
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -101,17 +103,34 @@ class _BodyScreenState extends State<BodyScreen> {
   Widget buildCards() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 87.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(20, (index) {
-            return const CustomCard(
-              price: '999,99',
-              title: 'Nike Dunk Low Retro SE Casual',
-              pathImage: 'assets/produtos/white_jacket.png',
-            );
-          }),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Promoções',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 21
+              ),
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            controller: _scrollController,
+            child: Row(
+              children: List.generate(20, (index) {
+                return const CustomCard(
+                  price: '999,99',
+                  title: 'Nike Dunk Low Retro SE Casual',
+                  pathImage: 'assets/produtos/white_jacket.png',
+                );
+              }),
+            ),
+          ),
+        ],
       ),
     );
   }
