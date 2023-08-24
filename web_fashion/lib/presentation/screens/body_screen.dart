@@ -100,6 +100,13 @@ class _BodyScreenState extends State<BodyScreen> {
     );
   }
 
+  final List<String> imagePaths = [
+    'assets/produtos/white_jacket.png',
+    'assets/produtos/camisa_black.png',
+    'assets/produtos/short_red.png',
+  ];
+  int currentImageIndex = 0;
+
   Widget buildCards() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 87.0),
@@ -113,19 +120,20 @@ class _BodyScreenState extends State<BodyScreen> {
               'Promoções',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 21
+                fontSize: 21,
               ),
             ),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            controller: _scrollController,
             child: Row(
               children: List.generate(20, (index) {
-                return const CustomCard(
+                final imagePath = imagePaths[currentImageIndex % imagePaths.length];
+                currentImageIndex++;
+                return CustomCard(
                   price: '999,99',
                   title: 'Nike Dunk Low Retro SE Casual',
-                  pathImage: 'assets/produtos/white_jacket.png',
+                  pathImage: imagePath,
                 );
               }),
             ),
