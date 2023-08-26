@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:web_fashion/presentation/widgets/custom_card.dart';
+import 'package:web_fashion/presentation/widgets/rodape.dart';
 
 class BodyScreen extends StatefulWidget {
   const BodyScreen({super.key});
@@ -12,8 +13,6 @@ class BodyScreen extends StatefulWidget {
 class _BodyScreenState extends State<BodyScreen> {
 
   int _currentIndex = 0;
-
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -29,10 +28,11 @@ class _BodyScreenState extends State<BodyScreen> {
         children: [
           buildAnuncios(context),
           buildCards(),
+          buildCards(),
           const SizedBox(
             height: 30,
           ),
-          _buildContainerDead,
+          Rodape(),
         ],
       ),
     );
