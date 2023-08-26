@@ -89,8 +89,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// Cria a area Starkzhx
   Widget _buildContainerStarkzhx(BuildContext context) {
-    return Row(
-      children: const [
+    return const Row(
+      children: [
         Icon(FontAwesomeIcons.googleWallet),
         SizedBox(
           width: 20,
@@ -125,7 +125,30 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildNavItems(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: _navItems.map((item) => _buildNavItem(item, context, fontSize: 18)).toList(),
+      children: _navItems.map((item) => _buildLancamentosTooltip(item, fontSize: 18)).toList(),
+    );
+  }
+
+  Widget _buildLancamentosTooltip(ModelItems item, {double? fontSize}) {
+    return Tooltip(
+      message: item.title,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () {
+            print('Hello!');
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Text(
+              item.title,
+              style: TextStyle(
+                fontSize: fontSize
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
